@@ -1,25 +1,29 @@
-## AWS Amplify Next.js (Pages) Starter Template
+# Baking Helper
 
-This repository provides a starter template for creating applications using Next.js (Pages) and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.
+A small web app for dividing dough into equal pieces.
 
-## Overview
+## Dough Divider
 
-This template equips you with a foundational Next.js application integrated with AWS Amplify, streamlined for scalability and performance. It is ideal for developers looking to jumpstart their project with pre-configured AWS services like Cognito, AppSync, and DynamoDB.
+Enter the total dough weight (grams) and how many pieces you want. The app lists a countdown of **scale readings**: put the whole dough on the scale, pull off dough until the scale shows the next reading, and repeat — each piece you remove ends up the same weight, with no re-weighing or mental math.
 
-## Features
+Once readings are shown, the app keeps your phone screen awake (where the browser supports it) so the display doesn't time out mid-bake. Use **Reset** to start over.
 
-- **Authentication**: Setup with Amazon Cognito for secure user authentication.
-- **API**: Ready-to-use GraphQL endpoint with AWS AppSync.
-- **Database**: Real-time database powered by Amazon DynamoDB.
+## Development
 
-## Deploying to AWS
+```bash
+npm install
+npm run dev
+```
 
-For detailed instructions on deploying your application, refer to the [deployment section](https://docs.amplify.aws/nextjs/start/quickstart/nextjs-pages-router/#deploy-a-fullstack-app-to-aws) of our documentation.
+Open http://localhost:3000.
 
-## Security
+Other scripts: `npm run build`, `npm run start`, `npm run lint`.
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+## Deployment
 
-## License
+Hosted with AWS Amplify Hosting; the build is configured in `amplify.yml`. Any push to `main` deploys.
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+## Stack
+
+- [Next.js](https://nextjs.org/) (Pages Router) + React + TypeScript
+- [Tailwind CSS](https://tailwindcss.com/)
