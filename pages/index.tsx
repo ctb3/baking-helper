@@ -48,12 +48,25 @@ function useWakeLock() {
   return { supported, active, acquire, release };
 }
 
+const formatGrams = (value: number) =>
+  value.toLocaleString("en-US", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  });
+
 export default function App() {
   const [weight, setWeight] = useState("");
   const [numberOfItems, setNumberOfItems] = useState("");
   const [results, setResults] = useState<number[]>([]);
   const [error, setError] = useState("");
+  const resultsRef = useRef<HTMLDivElement>(null);
   const wakeLock = useWakeLock();
+
+  useEffect(() => {
+    if (results.length > 0) {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [results]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,12 +101,16 @@ export default function App() {
   };
 
   return (
-    <main className="min-h-screen flex items-start sm:items-center justify-center bg-gray-100 p-4">
+    <main className="min-h-[100dvh] flex flex-col items-center justify-start sm:justify-center bg-gray-100 p-4">
       <Head>
         <title>Dough Divider</title>
         <meta
           name="description"
           content="Divide dough into equal pieces using countdown scale readings."
+        />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
       </Head>
       <div className="p-6 sm:p-8 bg-white rounded-lg shadow-md w-full max-w-md">
@@ -143,7 +160,7 @@ export default function App() {
         </form>
 
         {results.length > 0 && (
-          <div className="mt-6">
+          <div ref={resultsRef} className="mt-6 scroll-mt-4">
             <h2 className="text-lg font-semibold mb-1">Scale Readings</h2>
             <p className="text-sm text-gray-500 mb-3">
               Remove dough until the scale shows each reading.
@@ -155,7 +172,9 @@ export default function App() {
                   className="flex justify-between items-center px-4 py-3 bg-gray-50 rounded-md"
                 >
                   <span className="text-gray-600">Piece {index + 1}</span>
-                  <span className="text-xl font-semibold tabular-nums">{reading}g</span>
+                  <span className="text-xl font-semibold tabular-nums">
+                    {formatGrams(reading)}g
+                  </span>
                 </div>
               ))}
             </div>
@@ -184,6 +203,19 @@ export default function App() {
           </div>
         )}
       </div>
+      <footer className="mt-6 pb-[env(safe-area-inset-bottom)] text-center text-sm text-gray-500">
+        <a
+          href="https://github.com/ctb3/baking-helper"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+        >
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+          </svg>
+          GitHub
+        </a>
+      </footer>
     </main>
   );
 }
