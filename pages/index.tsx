@@ -203,7 +203,7 @@ export default function App() {
           </div>
         )}
       </div>
-      <footer className="mt-6 pb-[env(safe-area-inset-bottom)] text-center text-sm text-gray-500">
+      <footer className="mt-auto pt-6 pb-[env(safe-area-inset-bottom)] text-center text-sm text-gray-500">
         <a
           href="https://github.com/ctb3/baking-helper"
           target="_blank"
